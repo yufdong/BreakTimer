@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/setWorkLabel"
+        android:textSize="@dimen/picker_label_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/set_work_label"
+        android:layout_gravity="center_horizontal"
+        android:gravity="top"
+        android:onClick="openWorkTimePickerDialog"/>
+
+    <TextView
+        android:id="@+id/work_time_text"
+        android:textSize="@dimen/colon_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:onClick="openWorkTimePickerDialog"/>
+
+    <TextView
+        android:id="@+id/setBreakLabel"
+        android:textSize="@dimen/picker_label_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/set_break_label"
+        android:layout_gravity="center_horizontal"
+        android:onClick="openBreakTimePickerDialog"/>
+
+    <TextView
+        android:id="@+id/break_time_text"
+        android:textSize="@dimen/colon_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:onClick="openBreakTimePickerDialog"/>
+
+    <Button
+        android:id="@+id/start_timer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_timer_button_text"
+        android:layout_gravity="center_horizontal"
+        android:onClick="startWorkTimer"/>
+
+</LinearLayout>
