@@ -45,7 +45,7 @@ public class CountDownTimer {
      * Stop the timer and reset the count down to a specified time
      * @param time The new time remaining
      */
-    public void resetTimer(long time) {
+    public void stopTimer(long time) {
         handler.removeCallbacks(runnable);
         totalTime = time;
     }
@@ -109,6 +109,6 @@ public class CountDownTimer {
             timer.timeText = CountDownTimer.formatTimeToString((int) timer.timeRemaining);
             timer.handler.postDelayed(this, timer.DELAY);
         }
-    };
+    }
 
 }

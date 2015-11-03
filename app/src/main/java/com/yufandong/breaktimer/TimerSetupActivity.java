@@ -1,6 +1,5 @@
 package com.yufandong.breaktimer;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,20 +7,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity {
+public class TimerSetupActivity extends ActionBarActivity {
 
-    private final String WORK_DIALOG_TITLE = "Pick Work Time";
-    private final String BREAK_DIALOG_TITLE = "Pick Break Time";
+    public static int workHour, workMin, breakHour, breakMin;
 
     private static TextView workTimeText;
     private static TextView breakTimeText;
-    private static int workHour, workMin, breakHour, breakMin;
     private Bundle dialogBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Recover data from re-rendering upon rotated screen
         if(savedInstanceState != null) {
             workHour = savedInstanceState.getInt("Work Hour");
             workMin = savedInstanceState.getInt("Work Minute");
@@ -29,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
             breakMin = savedInstanceState.getInt("Break Minute");
         }
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_timer_setup);
 
         workTimeText = (TextView) findViewById(R.id.work_time_text);
         breakTimeText = (TextView) findViewById(R.id.break_time_text);
@@ -61,6 +59,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        // Save data to be recovered upon re-rendering
         outState.putInt("Work Hour", workHour);
         outState.putInt("Work Minute", workMin);
         outState.putInt("Break Hour", breakHour);
@@ -68,38 +68,33 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startWorkTimer(View view) {
-        Intent intent = new Intent(this, WorkTimerActivity.class);
-        intent.putExtra("Work Hour", workHour);
-        intent.putExtra("Work Minute", workMin);
-        intent.putExtra("Break Hour", breakHour);
-        intent.putExtra("Break Minute", breakMin);
-        startActivity(intent);
-
-        finish();
+        AlarmStateManager.getAlarmStateManagerInstance().transitToNextState(this);
     }
 
     public void openWorkTimePickerDialog(View view) {
         dialogBundle = new Bundle();
-        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(dialogBundle, WORK_DIALOG_TITLE, workHour, workMin);
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(dialogBundle,
+                getString(R.string.work_time_picker_dialog_title), workHour, workMin);
         timePickerDialog.setOnDialogDismissListener(new TimePickerDialog.OnDialogDismissListener() {
             @Override
             public void onDismiss() {
                 fetchWorkTimeFromDialog();
             }
         });
-        timePickerDialog.show(getFragmentManager(), WORK_DIALOG_TITLE);
+        timePickerDialog.show(getFragmentManager(), getString(R.string.work_time_picker_dialog_title));
     }
 
     public void openBreakTimePickerDialog(View view) {
         dialogBundle = new Bundle();
-        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(dialogBundle, BREAK_DIALOG_TITLE, breakHour, breakMin);
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(dialogBundle,
+                getString(R.string.break_time_picker_dialog_title), breakHour, breakMin);
         timePickerDialog.setOnDialogDismissListener(new TimePickerDialog.OnDialogDismissListener() {
             @Override
             public void onDismiss() {
                 fetchBreakTimeFromDialog();
             }
         });
-        timePickerDialog.show(getFragmentManager(), BREAK_DIALOG_TITLE);
+        timePickerDialog.show(getFragmentManager(), getString(R.string.break_time_picker_dialog_title));
     }
 
 

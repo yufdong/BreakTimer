@@ -29,4 +29,12 @@
         android:text="@string/stop_timer_button_text"
         android:layout_gravity="center_horizontal"
         android:onClick="stopTimer"/>
+
+    <Button
+        android:id="@+id/start_alarm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stop_timer_button_text"
+        android:layout_gravity="center_horizontal"
+        android:onClick="testStartAlarm"/>
 </LinearLayout>

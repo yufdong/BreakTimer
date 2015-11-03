@@ -9,11 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class WorkTimerActivity extends ActionBarActivity {
+public class TimerActivity extends ActionBarActivity {
 
-    private long totalWorkTime; // in milliseconds
+    private long totalTime; // in milliseconds
     private TextView timeTextView;
-    private Bundle savedBundle;
 
     Runnable runnable;
     CountDownTimer timer;
@@ -22,17 +21,15 @@ public class WorkTimerActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_timer);
-        savedBundle = getIntent().getExtras();
 
-        int hour = savedBundle.getInt("Work Hour");
-        int min = savedBundle.getInt("Work Minute");
-        totalWorkTime = (hour * 3600 + min * 60) * 1000;
+        Bundle b = getIntent().getExtras();
+        totalTime = b.getLong("total time");
 
         timeTextView = (TextView) findViewById(R.id.timeRemaining);
         // Setting initial value fixes a bug where there is a delay before the text view appears
-        timeTextView.setText(CountDownTimer.formatTimeToString((int) totalWorkTime));
+        timeTextView.setText(CountDownTimer.formatTimeToString((int) totalTime));
 
-        timer = new CountDownTimer(totalWorkTime);
+        timer = new CountDownTimer(totalTime);
         runnable = new CountDownTimer.CountDownRunnable(timer) {
             @Override
             public void run() {
@@ -83,12 +80,16 @@ public class WorkTimerActivity extends ActionBarActivity {
 
     public void stopTimer(View view) {
         timer.pauseTimer();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        AlarmStateManager.getAlarmStateManagerInstance().returnToSetup(this);
     }
 
     private void startAlarm() {
-        Intent intent = new Intent(this, WorkToBreakActivity.class);
-        startActivity(intent);
+        timer.pauseTimer();
+        AlarmStateManager.getAlarmStateManagerInstance().transitToNextState(this);
+    }
+
+    // test method
+    public void testStartAlarm(View view) {
+        startAlarm();
     }
 }
